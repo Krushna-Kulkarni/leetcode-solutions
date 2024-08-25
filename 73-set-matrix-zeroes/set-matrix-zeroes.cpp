@@ -3,29 +3,52 @@ public:
     void setZeroes(vector<vector<int>>& matrix) {
         int rows = matrix.size();
         int cols = matrix[0].size();
-// Initialize vectors with a size and default value 0
-    vector<int> rowMarkings(rows, 0);
-    vector<int> colMarkings(cols, 0);
-
-
-      
-// iterating over matrix and marking the row and col as 1 which consists a cell with value 0
-        for(int i = 0;  i < rows; i++){
-            for(int j = 0; j < cols; j++){
-                if(matrix[i][j] == 0){
-                    rowMarkings[i] = 1;
-                    colMarkings[j] = 1;
+        
+        bool firstRowZero = false;
+        bool firstColZero = false;
+        
+        // Check if the first row or first column should be zero
+        for (int i = 0; i < rows; i++) {
+            if (matrix[i][0] == 0) {
+                firstColZero = true;
+                break;
+            }
+        }
+        for (int j = 0; j < cols; j++) {
+            if (matrix[0][j] == 0) {
+                firstRowZero = true;
+                break;
+            }
+        }
+        
+        // Use first row and first column as markers
+        for (int i = 1; i < rows; i++) {
+            for (int j = 1; j < cols; j++) {
+                if (matrix[i][j] == 0) {
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0;
                 }
             }
         }
-
-
-        // again iterating over the matrix and marking the cells as 0, for which the row or col is marked as 0;
-        for(int i = 0 ; i < rows; i++){
-            for(int j = 0; j < cols; j++ ){
-                if(rowMarkings[i] == 1 || colMarkings[j] == 1){
+        
+        // Set the elements to zero based on the markers
+        for (int i = 1; i < rows; i++) {
+            for (int j = 1; j < cols; j++) {
+                if (matrix[i][0] == 0 || matrix[0][j] == 0) {
                     matrix[i][j] = 0;
                 }
+            }
+        }
+        
+        // Handle the first row and first column separately
+        if (firstColZero) {
+            for (int i = 0; i < rows; i++) {
+                matrix[i][0] = 0;
+            }
+        }
+        if (firstRowZero) {
+            for (int j = 0; j < cols; j++) {
+                matrix[0][j] = 0;
             }
         }
     }
