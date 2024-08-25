@@ -18,12 +18,12 @@ public:
         vector<vector<int>> resVector;
 
         resVector.push_back({1});
-        resVector.push_back({1,1});
 
-             if(numRows == 1) return {resVector[0]};
-        if (numRows == 2) return resVector;
+
+        if(numRows == 1) return {resVector[0]};
+
         
-        for(int i = 1 ; i < numRows - 1; i++){
+        for(int i = 0 ; i < numRows - 1; i++){
             vector<int> newRow = generateRow(resVector[i]);
             resVector.push_back(newRow);
         }
