@@ -1,28 +1,27 @@
 class Solution {
 public:
-    void setZeroes(vector<vector<int>>& matrix) {
-        int rows = matrix.size();
-        int cols = matrix[0].size();
-
-        // Initialize maps to keep track of rows and columns that need to be zeroed
-        vector<bool> map1(rows, false); // This will track rows
-        vector<bool> map2(cols, false); // This will track columns
-
-        // First pass: Mark the rows and columns that need to be zeroed
+    void markRowColZero(int row, int col, vector<vector<int>>& mat, int rows, int cols){
         for(int i = 0; i < rows; i++){
             for(int j = 0; j < cols; j++){
-                if(matrix[i][j] == 0){
-                    map1[i] = true;  // Mark this row
-                    map2[j] = true;  // Mark this column
-                }
+                    if(i == row || j == col){
+                        mat[i][j] = 0; 
+                    }
             }
         }
 
-        // Second pass: Set the rows and columns to zero
+    }
+
+    void setZeroes(vector<vector<int>>& matrix) {
+    int rows = matrix.size();
+    int cols = matrix[0].size();
+        vector<vector<int>> matrixCpy = matrix;
+
+        // iterating over the cpy matrix and if cell is 0, making all cells in its row and col - 0 in og matrix.
+
         for(int i = 0; i < rows; i++){
-            for(int j = 0; j < cols; j++){
-                if(map1[i] || map2[j]){
-                    matrix[i][j] = 0;
+            for(int j = 0 ; j < cols; j++){
+                if(matrixCpy[i][j] == 0){
+                    markRowColZero(i, j, matrix, rows, cols);
                 }
             }
         }
