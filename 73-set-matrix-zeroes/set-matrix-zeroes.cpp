@@ -1,27 +1,30 @@
 class Solution {
 public:
-    void markRowColZero(int row, int col, vector<vector<int>>& mat, int rows, int cols){
-        for(int i = 0; i < rows; i++){
+    void setZeroes(vector<vector<int>>& matrix) {
+        int rows = matrix.size();
+        int cols = matrix[0].size();
+// Initialize vectors with a size and default value 0
+    vector<int> rowMarkings(rows, 0);
+    vector<int> colMarkings(cols, 0);
+
+
+      
+// iterating over matrix and marking the row and col as 1 which consists a cell with value 0
+        for(int i = 0;  i < rows; i++){
             for(int j = 0; j < cols; j++){
-                    if(i == row || j == col){
-                        mat[i][j] = 0; 
-                    }
+                if(matrix[i][j] == 0){
+                    rowMarkings[i] = 1;
+                    colMarkings[j] = 1;
+                }
             }
         }
 
-    }
 
-    void setZeroes(vector<vector<int>>& matrix) {
-    int rows = matrix.size();
-    int cols = matrix[0].size();
-        vector<vector<int>> matrixCpy = matrix;
-
-        // iterating over the cpy matrix and if cell is 0, making all cells in its row and col - 0 in og matrix.
-
-        for(int i = 0; i < rows; i++){
-            for(int j = 0 ; j < cols; j++){
-                if(matrixCpy[i][j] == 0){
-                    markRowColZero(i, j, matrix, rows, cols);
+        // again iterating over the matrix and marking the cells as 0, for which the row or col is marked as 0;
+        for(int i = 0 ; i < rows; i++){
+            for(int j = 0; j < cols; j++ ){
+                if(rowMarkings[i] == 1 || colMarkings[j] == 1){
+                    matrix[i][j] = 0;
                 }
             }
         }
